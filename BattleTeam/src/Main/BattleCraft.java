@@ -1,6 +1,7 @@
-package Main;
+package View;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -8,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JProgressBar;
 import Player.*;
 import Weapon.*;
+import View.BattleCraft;
 
 public class BattleCraft extends JFrame {
 
@@ -34,7 +37,6 @@ public class BattleCraft extends JFrame {
 
     private JProgressBar barSteveHp;
     private JProgressBar barMonsterHp;
-    private JLabel lblSteveName;
     private JScrollPane scrollPane;
 
     private JButton btnSword;
@@ -44,6 +46,8 @@ public class BattleCraft extends JFrame {
     private JButton btnSleep;
     private JButton btnAngelCard;
     private boolean isSteveTurn = true;  // 스티브의 턴을 체크하는 변수
+    private JLabel lblSteveName;
+    private JLabel lblCreeperName;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -67,11 +71,6 @@ public class BattleCraft extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // 컴포넌트 초기화 코드
-        lblSteveName = new JLabel("스티브"); 
-        lblSteveName.setBounds(105, 418, 50, 15);
-        contentPane.add(lblSteveName);
-
         lblSteveHp = new JLabel("HP");
         lblSteveHp.setBounds(95, 110, 50, 15);
         contentPane.add(lblSteveHp);
@@ -81,11 +80,11 @@ public class BattleCraft extends JFrame {
         contentPane.add(lblWeapon);
 
         lblMonsterName = new JLabel("몬스터");
-        lblMonsterName.setBounds(708, 418, 50, 15);
+        lblMonsterName.setBounds(686, 591, 50, 15);
         contentPane.add(lblMonsterName);
 
         lblMonsterHp = new JLabel("HP");
-        lblMonsterHp.setBounds(708, 110, 50, 15);
+        lblMonsterHp.setBounds(708, 50, 350, 400);
         contentPane.add(lblMonsterHp);
 
         barSteveHp = new JProgressBar();
@@ -147,6 +146,28 @@ public class BattleCraft extends JFrame {
         logArea.setBounds(486, 110, 187, 323);
         contentPane.add(logArea);
         logArea.setColumns(10);
+        
+        lblSteveName = new JLabel("");
+        lblSteveName.setIcon(new ImageIcon(BattleCraft.class.getResource("/images/Steve.png")));
+        lblSteveName.setBounds(55, 135, 360, 500);
+        ImageIcon d = new ImageIcon(BattleCraft.class.getResource("/images/Steve.png"));
+		Image e = d.getImage().getScaledInstance(360, 500, Image.SCALE_SMOOTH);// a를 Image로 변환하여 스케일 조정
+		ImageIcon f = new ImageIcon(e); // 스케일이 조정된 이미지를 다시 Icon으로 변환
+        contentPane.add(lblSteveName);
+        
+        lblSteveName.setIcon(f);
+        contentPane.add(lblSteveName);
+        
+        lblCreeperName = new JLabel("");
+        lblCreeperName.setIcon(new ImageIcon(BattleCraft.class.getResource("/images/Creeper.png")));
+        lblCreeperName.setBounds(708, 50, 350, 400);
+        ImageIcon d1 = new ImageIcon(BattleCraft.class.getResource("/images/Creeper.png"));
+		Image e1 = d1.getImage().getScaledInstance(350, 400, Image.SCALE_SMOOTH);// a를 Image로 변환하여 스케일 조정
+		ImageIcon f1 = new ImageIcon(e1); // 스케일이 조정된 이미지를 다시 Icon으로 변환
+		lblCreeperName.setBounds(697, 135, 360, 500);
+		lblCreeperName.setIcon(f1);
+
+        contentPane.add(lblCreeperName);
 
         // 게임 로직 초기화
         steve = new Steve();
@@ -204,7 +225,7 @@ public class BattleCraft extends JFrame {
     private void updateStatusLabels() {
         lblSteveHp.setText("HP: " + steve.getHp());
         lblMonsterHp.setText("HP: " + currentMonster.getHp());
-        barSteveHp.setValue(steve.getHp());
+        barSteveHp.setValue(100);
         barMonsterHp.setValue(currentMonster.getHp());
 
         if (steve.getWeapon() != null)
